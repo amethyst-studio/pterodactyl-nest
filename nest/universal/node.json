@@ -1,11 +1,13 @@
 {
   "name": "Node.js Universal",
   "description": "Universal nest egg for Node.js applications.",
+  "features": null,
   "images": [
     "node:16-buster-slim",
     "node:14-buster-slim",
     "node:12-buster-slim"
   ],
+  "file_denylist": [],
   "startup": [
     "echo 'Installing Node.js Modules with Node Package Manager...'",
     "npm install",
