@@ -2,49 +2,69 @@
   "name": "Node.js Universal",
   "description": "Universal nest egg for Node.js applications.",
   "images": [
-    "quay.io/yajtpg/pterodactyl-images:nodejs-7",
-    "quay.io/yajtpg/pterodactyl-images:nodejs-8",
-    "quay.io/yajtpg/pterodactyl-images:nodejs-9",
-    "quay.io/yajtpg/pterodactyl-images:nodejs-10",
-    "quay.io/yajtpg/pterodactyl-images:nodejs-11",
-    "quay.io/yajtpg/pterodactyl-images:nodejs-12",
-    "quay.io/yajtpg/pterodactyl-images:nodejs-13",
-    "quay.io/yajtpg/pterodactyl-images:nodejs-14",
-    "quay.io/yajtpg/pterodactyl-images:nodejs-15",
-    "quay.io/yajtpg/pterodactyl-images:nodejs-16"
+    "node:16-buster-slim",
+    "node:14-buster-slim",
+    "node:12-buster-slim"
   ],
-  "startup": "/start.sh",
+  "startup": "echo 'Installing Node.js Modules with Node Package Manager...';npm install;node --max-old-space-size={{SERVER_MEMORY}} {{SCRIPT}}",
   "config": {
     "files": "{}",
-    "startup": "{\n  \"done\": \"\"\n}",
+    "startup": "{\n  \"done\": \"[Pterodactyl] We are ready.\"\n}",
     "logs": "{\n  \"custom\": true,\n  \"location\": \"logs/latest.log\"\n}",
     "stop": "^C"
   },
   "scripts": {
     "installation": {
-      "script": null,
-      "container": "alpine:3.4",
-      "entrypoint": "ash"
+      "script": "echo \"Configuring Pterodactyl Node.js Application...\";apt update&&apt install -y git curl jq file unzip make gcc g++ python python-dev libtool;mkdir -p /mnt/server/;cd /mnt/server/;if [ \"${UPDATE}\" == \"false\" ]||[ \"${UPDATE}\" == \"0\" ];then echo -e \"We will assume you are aware what you are doing and will deploy all required files manually.\";echo -e \"If you wish to enable git auto updating, please reinstall the server with Update via Git enabled.\";exit 0;fi;if [[ ${GIT_REMOTE} != *.git ]];then GIT_REMOTE=${GIT_REMOTE}.git;fi;if [ -z \"${GIT_USERNAME}\" ]&&[ -z \"${GIT_ACCESS_TOKEN}\" ];then echo \"Git username and password are required to update via Git.\";exit 1;else GIT_REMOTE=https://${GIT_USERNAME}:${GIT_ACCESS_TOKEN}@$(echo -e ${GIT_REMOTE}|cut -d\\/ -f3-);fi;echo -e \"${GIT_REMOTE}\"",
+      "container": "node:14-buster-slim",
+      "entrypoint": "bash"
     }
   },
   "variables": [
     {
-      "name": "Install Command(s)",
-      "description": "Commands to run the configuration of the application. All the commands required for installation should be defined here.",
-      "env_variable": "STARTUP_CMD",
-      "default_value": "npm install --save --production",
+      "name": "Main Script",
+      "description": "The name of the file to be executed with Node.js runtime. Using '.' will attempt to pull this from the package.json application.",
+      "env_variable": "SCRIPT",
+      "default_value": ".",
       "user_viewable": true,
       "user_editable": true,
       "rules": "required|string|max:512"
     },
     {
-      "name": "Launch Command(s)",
-      "description": "Commands to run the application. Just the command(s) required to start the service should be defined here.",
-      "env_variable": "SECOND_CMD",
-      "default_value": "node .",
+      "name": "Update via Git",
+      "description": "If the runtime should attempt to automatically update your project by doing a hard clone of your remote. Local modifications will be lost on each startup.",
+      "env_variable": "UPDATE",
+      "default_value": 0,
       "user_viewable": true,
       "user_editable": true,
-      "rules": "required|string|max:256"
+      "rules": "required|boolean"
+    },
+    {
+      "name": "Git Remote",
+      "description": "The URL of upstream git host to clone from for 'Update via Git'.",
+      "env_variable": "GIT_REMOTE",
+      "default_value": "",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "string|max:512"
+    },
+    {
+      "name": "Username",
+      "description": "The username to access the upstream git host.",
+      "env_variable": "GIT_USERNAME",
+      "default_value": "",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "string|max:64"
+    },
+    {
+      "name": "Access Token",
+      "description": "The access token to access the upstream git host. You can use your password, but we greatly recommend access token if available.",
+      "env_variable": "GIT_ACCESS_TOKEN",
+      "default_value": "",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "string|max:256"
     }
   ],
   "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
@@ -52,6 +72,6 @@
     "version": "PTDL_v1",
     "update_url": null
   },
-  "exported_at": "2021-08-21T22:29:12.777Z",
+  "exported_at": "2021-08-21T23:39:07.748Z",
   "author": "postmaster@mxsrv.amethyst.live"
 }

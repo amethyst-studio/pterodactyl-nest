@@ -22,7 +22,7 @@
   "scripts": {
     "prepare": "husky install",
     "runEslint": "eslint .",
-    "runBuild": "node build.sh",
+    "runBuild": "node build.js",
     "upgrade": "npx npm-check-updates -u --target latest --peer && wget https://www.toptal.com/developers/gitignore/api/node,yarn,webstorm+all,visualstudiocode,visualstudio -O ./.gitignore && cat ./custom.gitignore >> .gitignore"
   },
   "root": true,
@@ -31,6 +31,10 @@
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.24.1",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^5.1.0"
+    "eslint-plugin-promise": "^5.1.0",
+    "husky": "^7.0.1"
+  },
+  "dependencies": {
+    "bash-minifier": "^0.1.3"
   }
 }
