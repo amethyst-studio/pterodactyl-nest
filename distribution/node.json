@@ -8,16 +8,16 @@
     "node:12-buster-slim"
   ],
   "file_denylist": [],
-  "startup": "echo 'Installing Node.js Modules with Node Package Manager...'\r\nnpm install\r\nnode --max-old-space-size={{SERVER_MEMORY}} {{SCRIPT}}",
+  "startup": "echo 'Installing Node.js Modules with Node Package Manager...'\nnpm install\nnode --max-old-space-size={{SERVER_MEMORY}} {{SCRIPT}}",
   "config": {
     "files": "{}",
-    "startup": "{\n  \"done\": \"[Pterodactyl] We are ready.\"\n}",
-    "logs": "{\n  \"custom\": true,\n  \"location\": \"logs/latest.log\"\n}",
+    "startup": "{\"done\":\"[Pterodactyl] We are ready.\"}",
+    "logs": "{\"custom\":true,\"location\":\"logs/latest.log\"}",
     "stop": "^C"
   },
   "scripts": {
     "installation": {
-      "script": "echo \"Configuring Pterodactyl Node.js Application...\"\r\n\r\napt update &&\r\n  apt install -y git curl jq file unzip make gcc g++ python python-dev libtool\r\n\r\nmkdir -p /mnt/server/\r\ncd /mnt/server/\r\n\r\nif [ \"${UPDATE}\" == \"false\" ] || [ \"${UPDATE}\" == \"0\" ]; then\r\n  echo -e \"We will assume you are aware what you are doing and will deploy all required files manually.\"\r\n  echo -e \"If you wish to enable git auto updating, please reinstall the server with Update via Git enabled.\"\r\n  exit 0\r\nfi\r\n\r\nif [[ ${GIT_REMOTE} != *.git ]]; then\r\n  GIT_REMOTE=${GIT_REMOTE}.git\r\nfi\r\n\r\nif [ -z \"${GIT_USERNAME}\" ] && [ -z \"${GIT_ACCESS_TOKEN}\" ]; then\r\n  echo \"Git username and password are required to update via Git.\"\r\n  exit 1\r\nelse\r\n  GIT_REMOTE=https://${GIT_USERNAME}:${GIT_ACCESS_TOKEN}@$(echo -e ${GIT_REMOTE} | cut -d\\/ -f3-)\r\nfi\r\n\r\necho -e \"${GIT_REMOTE}\"",
+      "script": "echo \"Configuring Pterodactyl Node.js Application...\"\n\napt update &&\n  apt install -y git curl jq file unzip make gcc g++ python python-dev libtool\n\nmkdir -p /mnt/server/\ncd /mnt/server/\n\nif [ \"${UPDATE}\" == \"false\" ] || [ \"${UPDATE}\" == \"0\" ]; then\n  echo -e \"We will assume you are aware what you are doing and will deploy all required files manually.\"\n  echo -e \"If you wish to enable git auto updating, please reinstall the server with Update via Git enabled.\"\n  exit 0\nfi\n\nif [[ ${GIT_REMOTE} != *.git ]]; then\n  GIT_REMOTE=${GIT_REMOTE}.git\nfi\n\nif [ -z \"${GIT_USERNAME}\" ] && [ -z \"${GIT_ACCESS_TOKEN}\" ]; then\n  echo \"Git username and password are required to update via Git.\"\n  exit 1\nelse\n  GIT_REMOTE=https://${GIT_USERNAME}:${GIT_ACCESS_TOKEN}@$(echo -e ${GIT_REMOTE} | cut -d\\/ -f3-)\nfi\n\necho -e \"${GIT_REMOTE}\"",
       "container": "node:14-buster-slim",
       "entrypoint": "bash"
     }
@@ -74,6 +74,6 @@
     "version": "PTDL_v1",
     "update_url": null
   },
-  "exported_at": "2021-08-21T23:53:26.030Z",
+  "exported_at": "2021-08-21T23:57:34.549Z",
   "author": "postmaster@mxsrv.amethyst.live"
 }

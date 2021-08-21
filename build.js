@@ -19,12 +19,12 @@ async function parallel (path) {
         }
         json.exported_at = new Date().toISOString()
         json.author = 'postmaster@mxsrv.amethyst.live'
-        json.startup = json.startup.join('\r\n')
+        json.startup = json.startup.join('\n')
         if (json.startup === undefined || json.startup === '') return reject(new Error(`[Build] Failed @ ${file} due to missing startup command.`))
-        json.config.files = JSON.stringify(json.config.files, null, 2)
-        json.config.startup = JSON.stringify(json.config.startup, null, 2)
-        json.config.logs = JSON.stringify(json.config.logs, null, 2)
-        json.scripts.installation.script = json.scripts.installation.script.join('\r\n')
+        json.config.files = JSON.stringify(json.config.files)
+        json.config.startup = JSON.stringify(json.config.startup)
+        json.config.logs = JSON.stringify(json.config.logs)
+        json.scripts.installation.script = json.scripts.installation.script.join('\n')
         if (!existsSync('./distribution/')) mkdirSync('./distribution/')
         writeFile('./distribution/' + basename(file), JSON.stringify(json, null, 2), 'utf8')
         return resolve({ out: JSON.stringify(json, null, 2), file, content, json })
