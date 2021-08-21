@@ -1,0 +1,36 @@
+{
+  "name": "pterodactyl-nest",
+  "description": "Shared and free Pterodactyl Panel Eggs. Adds a number of services, games, and expands your hosting potential. [Service Package]",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "Samuel J Voeller <samuel.voeller@mxsrv.amethyst.live>",
+  "contributors": [],
+  "homepage": "https://github.com/amethyst-studio/pterodactyl-nest#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amethyst-studio/pterodactyl-nest.git"
+  },
+  "bugs": {
+    "url": "https://github.com/amethyst-studio/pterodactyl-nest/issues"
+  },
+  "engineStrict": true,
+  "engines": {
+    "node": ">14.0.0",
+    "npm": ">7.11.0"
+  },
+  "main": "build.js",
+  "scripts": {
+    "prepare": "husky install",
+    "runEslint": "eslint .",
+    "runBuild": "node build.sh",
+    "upgrade": "npx npm-check-updates -u --target latest --peer && wget https://www.toptal.com/developers/gitignore/api/node,yarn,webstorm+all,visualstudiocode,visualstudio -O ./.gitignore && cat ./custom.gitignore >> .gitignore"
+  },
+  "root": true,
+  "private": true,
+  "devDependencies": {
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.24.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0"
+  }
+}
