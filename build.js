@@ -13,10 +13,6 @@ async function parallel (path) {
         const content = await readFile(file, 'utf8')
         const json = JSON.parse(content)
         json._comment = 'DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO'
-        json.meta = {
-          version: 'PTDL_v1',
-          update_url: null
-        }
         json.exported_at = new Date().toISOString()
         json.author = 'postmaster@mxsrv.amethyst.live'
         json.startup = require('bash-minifier')(json.startup.join('\n'))
