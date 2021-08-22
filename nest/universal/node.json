@@ -52,7 +52,7 @@
         "  GIT_REMOTE=https://${GIT_USERNAME}:${GIT_ACCESS_TOKEN}@$(echo -e ${GIT_REMOTE} | cut -d\\/ -f3-)",
         "fi",
         "",
-        "echo -e \"${GIT_REMOTE}\""
+        ""
       ],
       "container": "node:14-buster-slim",
       "entrypoint": "bash"

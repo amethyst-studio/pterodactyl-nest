@@ -25,4 +25,41 @@ else
   GIT_REMOTE=https://${GIT_USERNAME}:${GIT_ACCESS_TOKEN}@$(echo -e ${GIT_REMOTE} | cut -d\/ -f3-)
 fi
 
-echo -e "${GIT_REMOTE}"
+if [ $(ls -A /mnt/server) ]; then
+  echo "This directory '/mnt/server' already exists. Validating status."
+  if [ -d .git ]; then
+    echo "Directory '/mnt/server' is compatible with updater."
+    if [ -f .git/config ]; then
+      echo -e "Directory has '.git/config'"
+      ORIGIN=$(git config --get remote.origin.url)
+    else
+      echo -e "Directory does not have '.git/config'"
+      echo -e "Exiting to prevent accidental damage. Please validate the clone or reinstall your server."
+      exit 1
+    fi
+  fi
+
+  if [ "${ORIGIN}" == "${GIT_REMOTE}" ]; then
+    echo "Git origin is correct. Pulling latest changes."
+    git pull
+  fi
+else
+  echo "Directory '/mnt/server' does not exist. Cloning latest version of remote application."
+  if [ -z "${GIT_BRANCH}" ]; then
+    echo -e "Cloning default branch."
+    git clone ${GIT_REMOTE} .
+  else
+    echo -e "Cloning ${GIT_BRANCH} branch."
+    git clone --single-branch --branch ${GIT_BRANCH} ${GIT_ADDRESS} .
+  fi
+fi
+
+if [ -f /mnt/server/package.json ]; then
+  /usr/local/bin/npm install --production
+else
+  echo "Application does not have a package.json file. Skipping installation."
+  exit 0
+fi
+
+echo -e "Installation has been successfully completed. Please validate the application and begin using your service."
+exit 0
