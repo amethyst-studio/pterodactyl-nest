@@ -3,9 +3,10 @@
   "description": "Universal nest egg for Node.js applications.",
   "features": null,
   "images": [
-    "node:16-buster-slim",
-    "node:14-buster-slim",
-    "node:12-buster-slim"
+    "ghcr.io/parkervcp/yolks:nodejs_16",
+    "ghcr.io/parkervcp/yolks:nodejs_15",
+    "ghcr.io/parkervcp/yolks:nodejs_14",
+    "ghcr.io/parkervcp/yolks:nodejs_12"
   ],
   "file_denylist": [],
   "startup": "echo 'Installing Node.js Modules with Node Package Manager...';npm install;node --max-old-space-size={{SERVER_MEMORY}} {{SCRIPT}}",
@@ -74,6 +75,6 @@
     "version": "PTDL_v1",
     "update_url": null
   },
-  "exported_at": "2021-08-22T02:31:28.934Z",
+  "exported_at": "2021-08-22T02:54:53.361Z",
   "author": "postmaster@mxsrv.amethyst.live"
 }

@@ -3,9 +3,10 @@
   "description": "Universal nest egg for Node.js applications.",
   "features": null,
   "images": [
-    "node:16-buster-slim",
-    "node:14-buster-slim",
-    "node:12-buster-slim"
+    "ghcr.io/parkervcp/yolks:nodejs_16",
+    "ghcr.io/parkervcp/yolks:nodejs_15",
+    "ghcr.io/parkervcp/yolks:nodejs_14",
+    "ghcr.io/parkervcp/yolks:nodejs_12"
   ],
   "file_denylist": [],
   "startup": [
