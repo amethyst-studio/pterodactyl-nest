@@ -29,17 +29,16 @@
       "script": [
         "#!/bin/bash",
         "",
-        "echo \"Configuring Pterodactyl Node.js Application...\"",
+        "echo \"[Pterodactyl::EGG] Configuring Node.js Universal...\"",
         "",
-        "apt update &&",
-        "  apt install -y git curl jq file unzip make gcc g++ python python-dev libtool",
+        "apt update",
+        "apt install -y git make gcc g++ python python-dev libtool",
         "",
         "mkdir -p /mnt/server/",
         "cd /mnt/server/",
         "",
         "if [ \"${UPDATE}\" == \"false\" ] || [ \"${UPDATE}\" == \"0\" ]; then",
-        "  echo -e \"We will assume you are aware what you are doing and will deploy all required files manually.\"",
-        "  echo -e \"If you wish to enable git auto updating, please reinstall the server with Update via Git enabled.\"",
+        "  echo -e \"We will assume you are aware what you are doing and will deploy all required files manually. Use 'Update via Git' as 1 if you wish to update automatically.\"",
         "  exit 0",
         "fi",
         "",
@@ -91,8 +90,7 @@
         "fi",
         "",
         "echo -e \"Installation has been successfully completed. Please validate the application and begin using your service.\"",
-        "exit 0",
-        ""
+        "exit 0"
       ],
       "container": "node:14-buster-slim",
       "entrypoint": "bash"
@@ -101,9 +99,9 @@
   "variables": [
     {
       "name": "Main Script",
-      "description": "The name of the file to be executed with Node.js runtime. Using '.' will attempt to pull this from the package.json application.",
+      "description": "The name of the file to be executed with Node.js runtime. This is specific to your project, usually being './index.js' as the file.",
       "env_variable": "SCRIPT",
-      "default_value": ".",
+      "default_value": "./index.js",
       "user_viewable": true,
       "user_editable": true,
       "rules": "required|string|max:512"
