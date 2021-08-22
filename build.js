@@ -1,4 +1,4 @@
-const { existsSync, mkdirSync, rmdirSync } = require('fs')
+const { existsSync, mkdirSync, rmSync } = require('fs')
 const { readFile, writeFile } = require('fs/promises')
 const { basename, resolve } = require('path')
 const { getAllFiles } = require('./util/walk')
@@ -6,7 +6,7 @@ const { getAllFiles } = require('./util/walk')
 async function parallel (path) {
   const files = getAllFiles(resolve(__dirname, './nest/'))
   const tasks = []
-  if (existsSync('./distribution/')) rmdirSync('./distribution/', { recursive: true })
+  if (existsSync('./distribution/')) rmSync('./distribution/', { recursive: true })
   for (const file of files) {
     tasks.push(new Promise((resolve, reject) => {
       async function _ (resolve, reject) {
