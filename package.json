@@ -20,7 +20,7 @@
   },
   "main": "build.js",
   "scripts": {
-    "prepare": "husky install",
+    "husky": "husky install",
     "runEslint": "eslint .",
     "runBuild": "node build.js",
     "upgrade": "npx npm-check-updates -u --target latest --peer && wget https://www.toptal.com/developers/gitignore/api/node,yarn,webstorm+all,visualstudiocode,visualstudio -O ./.gitignore && cat ./custom.gitignore >> .gitignore"

@@ -10,8 +10,10 @@
   ],
   "file_denylist": [],
   "startup": [
-    "echo 'Installing Node.js Modules with Node Package Manager...'",
-    "npm install",
+    "if [ -d .git ] && [ \"${UPDATE}\" == \"1\" ]; then",
+    "  git pull",
+    "fi",
+    "npm install --production",
     "node --max-old-space-size={{SERVER_MEMORY}} {{SCRIPT}}"
   ],
   "config": {
@@ -90,7 +92,7 @@
         "  exit 0",
         "fi",
         "",
-        "echo -e \"Installation has been successfully completed. Please validate the application and begin using your service.\"",
+        "echo \"Installation has been successfully completed. Please validate the application and begin using your service.\"",
         "exit 0"
       ],
       "container": "node:14-buster-slim",
