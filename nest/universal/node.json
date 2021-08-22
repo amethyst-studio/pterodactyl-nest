@@ -27,7 +27,7 @@
       "custom": true,
       "location": "logs/latest.log"
     },
-    "stop": "^C"
+    "stop": "^^C"
   },
   "scripts": {
     "installation": {
