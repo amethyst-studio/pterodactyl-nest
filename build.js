@@ -23,7 +23,7 @@ async function parallel (path) {
         json.config.logs = JSON.stringify(json.config.logs)
         json.scripts.installation.script = require('bash-minifier')(json.scripts.installation.script.join('\n'))
         if (!existsSync('./distribution/')) mkdirSync('./distribution/')
-        writeFile(`./distribution/${json.name}.${json.meta.version}.${json.version}.json`, JSON.stringify(json, null, 2), 'utf8')
+        writeFile(`./distribution/${json.name}-${json.meta.version}-${json.version}.json`, JSON.stringify(json, null, 2), 'utf8')
         return resolve({ out: JSON.stringify(json, null, 2), file, content, json })
       }
       _(resolve, reject)
