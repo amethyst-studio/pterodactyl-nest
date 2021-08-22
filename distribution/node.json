@@ -9,7 +9,7 @@
     "ghcr.io/parkervcp/yolks:nodejs_12"
   ],
   "file_denylist": [],
-  "startup": "if [ -d .git ]&&[ \"${UPDATE}\" == \"1\" ];then git pull;fi;npm install --production;node --max-old-space-size={{SERVER_MEMORY}} {{SCRIPT}}",
+  "startup": "if [ -d .git ]&&[ \"${UPDATE}\" == \"1\" ];then git stash;git stash drop;git pull;fi;npm install --production;node --max-old-space-size={{SERVER_MEMORY}} {{SCRIPT}}",
   "config": {
     "files": "{}",
     "startup": "{\"done\":\"[Pterodactyl] We are ready.\"}",
@@ -75,6 +75,6 @@
     "version": "PTDL_v1",
     "update_url": null
   },
-  "exported_at": "2021-08-22T03:11:45.781Z",
+  "exported_at": "2021-08-22T03:18:55.599Z",
   "author": "postmaster@mxsrv.amethyst.live"
 }

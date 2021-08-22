@@ -11,6 +11,8 @@
   "file_denylist": [],
   "startup": [
     "if [ -d .git ] && [ \"${UPDATE}\" == \"1\" ]; then",
+    "  git stash",
+    "  git stash drop",
     "  git pull",
     "fi",
     "npm install --production",
