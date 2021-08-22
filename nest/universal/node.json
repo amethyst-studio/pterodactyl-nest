@@ -5,6 +5,7 @@
   },
   "name": "Node.js Universal",
   "description": "Universal nest egg for Node.js applications.",
+  "version": "1.0.0",
   "features": null,
   "images": [
     "ghcr.io/parkervcp/yolks:nodejs_16",
