@@ -72,7 +72,7 @@
       "name": "Update via Git",
       "description": "If the runtime should attempt to automatically update your project by doing a hard clone of your remote. Local modifications will be lost on each startup.",
       "env_variable": "UPDATE",
-      "default_value": 0,
+      "default_value": "0",
       "user_viewable": true,
       "user_editable": true,
       "rules": "required|boolean"
