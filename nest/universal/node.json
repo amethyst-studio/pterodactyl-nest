@@ -104,7 +104,7 @@
         "exit 0"
       ],
       "container": "ghcr.io/amethyst-studio/yolks:node_core",
-      "entrypoint": "/bin/bash"
+      "entrypoint": "bash"
     }
   },
   "variables": [
