@@ -39,4 +39,4 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            ghcr.io/xCykrix/yolks:node_${{ matrix.tag }}
+            ghcr.io/xcykrix/yolks:node_${{ matrix.tag }}
