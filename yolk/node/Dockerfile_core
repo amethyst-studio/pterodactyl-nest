@@ -2,5 +2,5 @@ FROM        ghcr.io/amethyst-studio/yolks:node_14
 
 LABEL       author="Samuel Voeller" maintainer="samuel.voeller@mxsrv.amethyst.live"
 
-COPY install.sh /usr/local/bin/
-ENTRYPOINT ["install.sh"]
+COPY ./installer.sh ./installer.sh
+ENTRYPOINT ["./installer.sh"]
