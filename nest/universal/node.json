@@ -44,8 +44,6 @@
         "",
         "echo \"[Pterodactyl::EGG] Configuring Node.js Universal...\"",
         "",
-        "apt update",
-        "apt install -y git",
         "",
         "mkdir -p /mnt/server/",
         "cd /mnt/server/ || exit 1",
@@ -106,7 +104,7 @@
         "echo \"Installation has been successfully completed. Please validate the application and begin using your service.\"",
         "exit 0"
       ],
-      "container": "node:14-buster-slim",
+      "container": "ghcr.io/amethyst-studio/yolks:node_16",
       "entrypoint": "bash"
     }
   },
