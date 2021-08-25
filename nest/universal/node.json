@@ -8,10 +8,7 @@
   "version": "1.0.0",
   "features": null,
   "images": [
-    "ghcr.io/parkervcp/yolks:nodejs_16",
-    "ghcr.io/parkervcp/yolks:nodejs_15",
-    "ghcr.io/parkervcp/yolks:nodejs_14",
-    "ghcr.io/parkervcp/yolks:nodejs_12"
+    "ghcr.io/parkervcp/yolks:nodejs_16"
   ],
   "file_denylist": [],
   "startup": [
@@ -23,7 +20,7 @@
     "  git reset --hard",
     "  git pull",
     "fi",
-    "npm install --production",
+    "npm install",
     "node --max-old-space-size={{SERVER_MEMORY}} {{SCRIPT}}"
   ],
   "config": {
@@ -42,7 +39,7 @@
         "echo \"[Pterodactyl::EGG] Configuring Node.js Universal...\"",
         "",
         "apt update",
-        "apt install -y git make gcc g++ python python-dev libtool",
+        "apt install -y git make gcc g++ python python3 python-dev python3-dev libtool",
         "",
         "mkdir -p /mnt/server/",
         "cd /mnt/server/ || exit 1",
@@ -79,6 +76,11 @@
         "",
         "  if [ \"${ORIGIN}\" == \"${GIT_REMOTE}\" ]; then",
         "    echo \"Git origin is correct. Pulling latest changes.\"",
+        "    git fetch --all",
+        "    if [ -f package-lock.json ]; then",
+        "      rm -f package-lock.json",
+        "    fi",
+        "    git reset --hard",
         "    git pull",
         "  fi",
         "else",
@@ -95,18 +97,14 @@
         "    git clone --single-branch --branch \"${GIT_BRANCH}\" \"${GIT_ADDRESS}\" .",
         "  fi",
         "fi",
+        "echo -e \"Installing 3rd Party Software for Node.js\"",
         "",
-        "if [ -f /mnt/server/package.json ]; then",
-        "  /usr/local/bin/npm install --production",
-        "else",
-        "  echo \"Application does not have a package.json file. Skipping installation.\"",
-        "  exit 0",
-        "fi",
+        "npm install -g node-gyp",
         "",
         "echo \"Installation has been successfully completed. Please validate the application and begin using your service.\"",
         "exit 0"
       ],
-      "container": "node:14-buster-slim",
+      "container": "node:16-buster-slim",
       "entrypoint": "bash"
     }
   },
