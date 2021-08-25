@@ -6,7 +6,8 @@ on:
   push:
     branches:
       - main
-      - yolk/*
+    paths:
+      - yolk/node/*
 
 jobs:
   push:
