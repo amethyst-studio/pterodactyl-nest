@@ -21,6 +21,7 @@ jobs:
           - 15
           - 14
           - 12
+          - core
     steps:
       - uses: actions/checkout@v2
       - uses: docker/setup-buildx-action@v1

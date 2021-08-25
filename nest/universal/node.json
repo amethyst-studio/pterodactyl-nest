@@ -44,7 +44,6 @@
         "",
         "echo \"[Pterodactyl::EGG] Configuring Node.js Universal...\"",
         "",
-        "",
         "mkdir -p /mnt/server/",
         "cd /mnt/server/ || exit 1",
         "",
@@ -104,7 +103,7 @@
         "echo \"Installation has been successfully completed. Please validate the application and begin using your service.\"",
         "exit 0"
       ],
-      "container": "ghcr.io/amethyst-studio/yolks:node_16",
+      "container": "ghcr.io/amethyst-studio/yolks:node_core",
       "entrypoint": "bash"
     }
   },

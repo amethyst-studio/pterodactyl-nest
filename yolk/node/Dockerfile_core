@@ -1,0 +1,9 @@
+FROM        ghcr.io/amethyst-studio/yolks:node_14
+
+LABEL       author="Samuel Voeller" maintainer="samuel.voeller@mxsrv.amethyst.live"
+
+USER        container
+ENV         USER=container HOME=/home/container
+WORKDIR     /home/container
+
+CMD         ["/bin/bash"]
