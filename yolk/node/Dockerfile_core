@@ -1,6 +1,13 @@
-FROM        ghcr.io/amethyst-studio/yolks:node_14
+FROM        --platform=$BUILDPLATFORM debian:stable-slim
 
-LABEL       author="Samuel Voeller" maintainer="samuel.voeller@mxsrv.amethyst.live"
+LABEL       author="Samuel J Voeller" maintainer="samuel.voeller@mxsrv.amethyst.live"
 
-COPY ./installer.sh ./installer.sh
-ENTRYPOINT ["./installer.sh"]
+LABEL       org.opencontainers.image.source="https://github.com/amethyst-studio/pterodactyl-nest.git"
+LABEL       org.opencontainers.image.licenses=MIT
+
+ENV         DEBIAN_FRONTEND=noninteractive
+
+RUN         dpkg --add-architecture i386 \
+				&& apt update \
+				&& apt upgrade -y \
+				&& apt -y --no-install-recommends install ca-certificates curl lib32gcc-s1 libsdl2-2.0-0:i386 git
