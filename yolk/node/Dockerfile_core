@@ -5,3 +5,8 @@ LABEL       author="Samuel Voeller" maintainer="samuel.voeller@mxsrv.amethyst.li
 USER        container
 ENV         USER=container HOME=/home/container
 WORKDIR     /home/container
+
+COPY installable.sh /usr/local/bin/
+ENTRYPOINT ["installable.sh"]
+
+CMD [ "node" ]
