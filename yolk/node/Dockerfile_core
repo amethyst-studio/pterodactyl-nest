@@ -5,5 +5,3 @@ LABEL       author="Samuel Voeller" maintainer="samuel.voeller@mxsrv.amethyst.li
 USER        container
 ENV         USER=container HOME=/home/container
 WORKDIR     /home/container
-
-CMD         ["/bin/bash"]
