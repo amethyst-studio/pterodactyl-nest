@@ -35,7 +35,7 @@ jobs:
       - uses: docker/build-push-action@v2
         with:
           context: ./yolk/node/
-          file: ./node/Dockerfile_${{ matrix.tag }}
+          file: ./yolk/node/Dockerfile_${{ matrix.tag }}
           platforms: linux/amd64
           push: true
           tags: |
