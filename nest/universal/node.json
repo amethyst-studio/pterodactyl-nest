@@ -16,8 +16,11 @@
   "file_denylist": [],
   "startup": [
     "if [ -d .git ] && [ \"${UPDATE}\" == \"1\" ]; then",
-    "  git stash",
-    "  git stash drop",
+    "  git fetch --all",
+    "  if [ -f package-lock.json ]; then",
+    "    rm -f package-lock.json",
+    "  fi",
+    "  git reset --hard",
     "  git pull",
     "fi",
     "npm install --production",

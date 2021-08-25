@@ -14,7 +14,7 @@
     "ghcr.io/parkervcp/yolks:nodejs_12"
   ],
   "file_denylist": [],
-  "startup": "if [ -d .git ]&&[ \"${UPDATE}\" == \"1\" ];then git stash;git stash drop;git pull;fi;npm install --production;node --max-old-space-size={{SERVER_MEMORY}} {{SCRIPT}}",
+  "startup": "if [ -d .git ]&&[ \"${UPDATE}\" == \"1\" ];then git fetch --all;if [ -f package-lock.json ];then rm -f package-lock.json;fi;git reset --hard;git pull;fi;npm install --production;node --max-old-space-size={{SERVER_MEMORY}} {{SCRIPT}}",
   "config": {
     "files": "{}",
     "startup": "{\"done\":\"[Pterodactyl] We are ready.\"}",
@@ -76,6 +76,6 @@
     }
   ],
   "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
-  "exported_at": "2021-08-22T13:41:18.801Z",
+  "exported_at": "2021-08-25T19:44:07.270Z",
   "author": "postmaster@mxsrv.amethyst.live"
 }
