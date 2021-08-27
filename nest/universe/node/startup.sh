@@ -14,8 +14,8 @@ echo "Install: package.json"
 npm install
 
 echo -e "Launch: ${SCRIPT}"
-if [ "${UPDATE}" == "true" ] || [ "${UPDATE}" == "1" ]; then
-  nodemon --max-old-space-size="{{SERVER_MEMORY}}" "{{SCRIPT}}"
+if [ "${RESTART}" == "true" ] || [ "${RESTART}" == "1" ]; then
+  forever start --max-old-space-size="{{SERVER_MEMORY}}" "{{SCRIPT}}"
 else
   node --max-old-space-size="{{SERVER_MEMORY}}" "{{SCRIPT}}"
 fi
