@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "version": "PTDL_v1"
+  },
+  "name": "Node.js",
+  "nest": "Universe",
+  "description": "Universe Node.js Runner for Pterodactyl. Built-in GitHub updater and nodemon for automatic restart.",
+  "version": "1.0.0",
+  "images": [
+    "ghcr.io/amethyst-studio/yolks:node_12",
+    "ghcr.io/amethyst-studio/yolks:node_14",
+    "ghcr.io/amethyst-studio/yolks:node_15",
+    "ghcr.io/amethyst-studio/yolks:node_16"
+  ],
+  "startup": "if [ -d .git ]&&[ \"${UPDATE}\" == \"1\" ];then git fetch --all>/dev/null;if [ -f package-lock.json ];then rm -f package-lock.json>/dev/null;fi;git reset --hard>/dev/null;git pull;fi;echo \"Install: node-gyp\";npm install node-gyp>/dev/null;echo \"Install: package.json\";npm install;echo -e \"Launch: ${SCRIPT}\";if [ \"${UPDATE}\" == \"true\" ]||[ \"${UPDATE}\" == \"1\" ];then nodemon --max-old-space-size=\"{{SERVER_MEMORY}}\" \"{{SCRIPT}}\";else node --max-old-space-size=\"{{SERVER_MEMORY}}\" \"{{SCRIPT}}\";fi",
+  "config": {
+    "files": "{}",
+    "startup": "{\"done\":\"[Pterodactyl] We are ready.\"}",
+    "logs": "{}",
+    "stop": "^^C"
+  },
+  "scripts": {
+    "installation": {
+      "script": "echo \"[Pterodactyl:install.sh] Node.js Universal :: STEP_INSTALL\";echo \": MKDIR /mnt/server/\"&&mkdir -p /mnt/server/>/dev/null;echo \": ENTDIR /mnt/server/\"&&cd /mnt/server/>/dev/null||exit;if [ \"${UPDATE}\" == \"false\" ]||[ \"${UPDATE}\" == \"0\" ];then echo \"\";echo \"WARN: Update via Git -> Disabled by user startup configuration.\";echo \"  + You are required to manually upload your project, excluding node_modules, unless enabled.\";echo \"  + If you would like to enable this feature, please update your startup settings and reinstall your server.\";echo \"\";echo \": EXIT [0] / The installation has been successfully completed.\";exit 0;fi;if [[ ${GIT_REMOTE} != *.git ]];then GIT_REMOTE=${GIT_REMOTE}.git;fi;if [ -z \"${GIT_USERNAME}\" ]&&[ -z \"${GIT_ACCESS_TOKEN}\" ];then echo \"ERR: Update via Git -> Detected invalid user startup configuration.\";echo \"  + You must specify both a valid username and access token to use this feature.\";echo \"\";echo \": EXIT [1] / The installation has failed. Please review the console for more information.\";echo \": EXIT [1] / Navigate to 'Settings' and select 'Reinstall Server' once resolved.\";exit 1;else GIT_REMOTE=https://${GIT_USERNAME}:${GIT_ACCESS_TOKEN}@$(echo -e \"${GIT_REMOTE}\"|cut -d/ -f3-);fi;if [ \"$(ls -A /mnt/server)\" ];then echo \": CHKDIR /mnt/server/ EXISTS\";if [ -d .git ];then echo \": CHKDIR /mnt/server/.git/ EXISTS\";if [ -f .git/config ];then echo -e \": CHKFILE /mnt/server/.git/config\";ORIGIN=$(git config --get remote.origin.url);else echo \"ERR: Update via Git -> Detected invalid '/mnt/server/.git/config'.\";echo \"  + The origin of the .git directory does not match the configured Git Remote URL.\";echo \"\";echo \": EXIT [1] / The installation has failed. Please review the console for more information.\";echo \": EXIT [1] / Navigate to 'Settings' and select 'Reinstall Server' once resolved.\";exit 1;fi;fi;if [ \"${ORIGIN}\" == \"${GIT_REMOTE}\" ];then echo \": COMMAND -> git fetch --all\";git fetch --all>/dev/null;if [ -f package-lock.json ];then echo \": COMMAND -> rm -f package-lock.json\";rm -f package-lock.json>/dev/null;fi;echo \": COMMAND -> git reset --hard\";git reset --hard>/dev/null;echo \": COMMAND -> git pull\";git pull>/dev/null;fi;else echo \": CHKDIR /mnt/server/ NOT-EXISTS\";if [ -z \"${GIT_BRANCH}\" ];then git config --global user.email \"ptero@mxsrv.amethyst.live\">/dev/null;git config --global user.name \"Pterodactyl Panel Automation\">/dev/null;echo -e \": COMMAND -> git clone \\\"${GIT_REMOTE}\\\" .\";git clone \"${GIT_REMOTE}\" .;else git config --global user.email \"ptero@mxsrv.amethyst.live\">/dev/null;git config --global user.name \"Pterodactyl Panel Automation\">/dev/null;echo -e \": COMMAND -> git clone --single-branch --branch \\\"${GIT_BRANCH}\\\" \\\"${GIT_ADDRESS}\\\" .\";git clone --single-branch --branch \"${GIT_BRANCH}\" \"${GIT_ADDRESS}\" .;fi;fi;echo \": EXIT [0] / The installation has been successfully completed.\";exit 0",
+      "container": "ghcr.io/amethyst-studio/yolks:node_core",
+      "entrypoint": "bash"
+    }
+  },
+  "variables": [
+    {
+      "name": "Main Script",
+      "description": "The name of the file to be executed with Node.js runtime. This is specific to your project, usually being './index.js' as the file.",
+      "env_variable": "SCRIPT",
+      "default_value": "./index.js",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|string|max:512"
+    },
+    {
+      "name": "Update via Git",
+      "description": "If the runtime should attempt to automatically update your project by doing a hard clone of your remote. Local modifications will be lost on each startup.",
+      "env_variable": "UPDATE",
+      "default_value": "0",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|boolean"
+    },
+    {
+      "name": "Restart via Nodemon",
+      "description": "If the runtime should attempt to automatically restart your project upon exiting abnormaly.",
+      "env_variable": "RESTART",
+      "default_value": "0",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|boolean"
+    },
+    {
+      "name": "Git Remote",
+      "description": "The URL of upstream git host to clone from for 'Update via Git'.",
+      "env_variable": "GIT_REMOTE",
+      "default_value": "",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "string|max:512"
+    },
+    {
+      "name": "Username",
+      "description": "The username to access the upstream git host.",
+      "env_variable": "GIT_USERNAME",
+      "default_value": "",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "string|max:64"
+    },
+    {
+      "name": "Access Token",
+      "description": "The access token to access the upstream git host. You can use your password, but we greatly recommend access token if available.",
+      "env_variable": "GIT_ACCESS_TOKEN",
+      "default_value": "",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "string|max:256"
+    }
+  ],
+  "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+  "exported_at": "2021-08-27T03:26:26.881Z",
+  "author": "postmaster@mxsrv.amethyst.live"
+}

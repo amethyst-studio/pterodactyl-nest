@@ -1,30 +1,28 @@
 const { existsSync, mkdirSync, rmSync } = require('fs')
-const { readFile, writeFile } = require('fs/promises')
+const { writeFile } = require('fs/promises')
 const { basename, resolve } = require('path')
 const { getAllFiles } = require('./util/walk')
 
 async function parallel (path) {
   const files = getAllFiles(resolve(__dirname, './nest/'))
   const tasks = []
-  if (existsSync('./distribution/')) rmSync('./distribution/', { recursive: true })
+  if (existsSync('./.nest/')) rmSync('./.nest/', { recursive: true })
   for (const file of files) {
+    if (!file.endsWith('.js')) continue
     tasks.push(new Promise((resolve, reject) => {
       async function _ (resolve, reject) {
         console.info(`[Build] ${new Date().toISOString()} T:${tasks.length + 1} | Threaded build for '${basename(file)}'`)
-        const content = await readFile(file, 'utf8')
-        const json = JSON.parse(content)
+        const json = require(file)
         json._comment = 'DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO'
         json.exported_at = new Date().toISOString()
         json.author = 'postmaster@mxsrv.amethyst.live'
-        json.startup = require('bash-minifier')(json.startup.join('\n'))
-        if (json.startup === undefined || json.startup === '') return reject(new Error(`[Build] Failed @ ${file} due to missing startup command.`))
         json.config.files = JSON.stringify(json.config.files)
         json.config.startup = JSON.stringify(json.config.startup)
         json.config.logs = JSON.stringify(json.config.logs)
-        json.scripts.installation.script = require('bash-minifier')(json.scripts.installation.script.join('\n'))
-        if (!existsSync('./distribution/')) mkdirSync('./distribution/')
-        writeFile(`./distribution/${json.name}-${json.meta.version}-${json.version}.json`, JSON.stringify(json, null, 2), 'utf8')
-        return resolve({ out: JSON.stringify(json, null, 2), file, content, json })
+        if (!existsSync('./.nest/')) mkdirSync('./.nest/')
+        if (!existsSync(`./.next/${json.nest}`)) mkdirSync(`./.nest/${json.nest}`)
+        writeFile(`./.nest/${json.nest}/${json.name}-${json.meta.version}-${json.version}.json`, JSON.stringify(json, null, 2), 'utf8')
+        return resolve({ out: JSON.stringify(json, null, 2), file, json })
       }
       _(resolve, reject)
     }))
