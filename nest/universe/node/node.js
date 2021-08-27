@@ -30,7 +30,7 @@ const _variable = [
     rules: 'required|boolean'
   },
   {
-    name: 'Restart via Nodemon',
+    name: 'Restart via Forever',
     description: 'If the runtime should attempt to automatically restart your project upon exiting abnormaly.',
     env_variable: 'RESTART',
     default_value: '0',

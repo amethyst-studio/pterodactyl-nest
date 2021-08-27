@@ -1,4 +1,5 @@
 if [ -d .git ] && [ "${UPDATE}" == "1" ]; then
+  git config --global pull.rebase true
   git fetch --all > /dev/null
   if [ -f package-lock.json ]; then
     rm -f package-lock.json > /dev/null
@@ -15,7 +16,7 @@ npm install
 
 echo -e "Launch: ${SCRIPT}"
 if [ "${RESTART}" == "true" ] || [ "${RESTART}" == "1" ]; then
-  forever start --max-old-space-size="{{SERVER_MEMORY}}" "{{SCRIPT}}"
+  forever --minUptime=500 --spinSleepTime=1000 -c "node --max-old-space-size={{SERVER_MEMORY}}" "{{SCRIPT}}"
 else
   node --max-old-space-size="{{SERVER_MEMORY}}" "{{SCRIPT}}"
 fi
