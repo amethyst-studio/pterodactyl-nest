@@ -86,6 +86,6 @@ if [[ ${ORIGIN} != '' ]]; then
 else
   # Attempt to clone with GIT_REMOTE.
   echo
-  echo "$ git clone ${GIT_REMOTE} . --single-branch" && git clone --single-branch --branch "${GIT_BRANCH}" "${GIT_REMOTE}" .
+  echo "$ git clone ${GIT_REMOTE} . --single-branch" && git clone "${GIT_REMOTE}" . --single-branch
   success
 fi
