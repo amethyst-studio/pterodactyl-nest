@@ -3,38 +3,44 @@
   "description": "Shared and free Pterodactyl Panel Eggs. Adds a number of services, games, and expands your hosting potential. [Service Package]",
   "version": "1.0.0",
   "license": "MIT",
-  "author": "Samuel J Voeller <samuel.voeller@mxsrv.amethyst.live>",
+  "author": "Samuel J Voeller <samuel.voeller@amethyst.live>",
   "contributors": [],
-  "homepage": "https://github.com/amethyst-studio/pterodactyl-nest#readme",
+  "homepage": "https://github.com/amethyst-studio/pterodactyl-nest",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/amethyst-studio/pterodactyl-nest.git"
-  },
-  "bugs": {
-    "url": "https://github.com/amethyst-studio/pterodactyl-nest/issues"
+    "url": "git@github.com/amethyst-studio/pterodactyl-nest.git"
   },
   "engineStrict": true,
   "engines": {
-    "node": ">14.0.0",
-    "npm": ">7.11.0"
+    "node": ">16.7.0",
+    "npm": ">7.22.0"
   },
-  "main": "build.js",
   "scripts": {
-    "husky": "husky install",
-    "format": "eslint .",
-    "build": "node build.js",
-    "upgrade": "npx npm-check-updates -u --target latest --peer && wget https://www.toptal.com/developers/gitignore/api/node,yarn,webstorm+all,visualstudiocode,visualstudio -O ./.gitignore && cat ./custom.gitignore >> .gitignore"
+    "start": "launch",
+    "build": "node ./build.js",
+    "prepare": "husky install"
   },
-  "root": true,
-  "private": true,
   "devDependencies": {
-    "eslint-config-standard": "^16.0.3",
-    "eslint-plugin-import": "^2.24.1",
+    "@types/chai": "^4.3.0",
+    "@types/mocha": "^9.1.0",
+    "@types/node": "^17.0.15",
+    "@typescript-eslint/eslint-plugin": "^5.11.0",
+    "@typescript-eslint/parser": "^5.11.0",
+    "chai": "^4.3.6",
+    "eslint": "^8.8.0",
+    "eslint-config-airbnb-typescript": "^16.1.0",
+    "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^5.1.0",
-    "husky": "^7.0.1"
+    "husky": "^7.0.4",
+    "mocha": "^9.2.0",
+    "script-launcher": "^1.37.1",
+    "ts-node": "^10.5.0",
+    "typedoc": "^0.22.11",
+    "typescript": "^4.5.5"
   },
   "dependencies": {
     "bash-minifier": "^0.1.3"
-  }
+  },
+  "root": true,
+  "private": true
 }

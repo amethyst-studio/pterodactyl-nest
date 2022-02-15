@@ -17,6 +17,7 @@ jobs:
     strategy:
       matrix:
         tag:
+          - 17
           - 16
           - 15
           - 14
