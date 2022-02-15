@@ -1,13 +1,15 @@
-FROM        --platform=$BUILDPLATFORM debian:stable-slim
+FROM --platform=$BUILDPLATFORM debian:stable-slim
 
-LABEL       author="Samuel J Voeller" maintainer="samuel.voeller@mxsrv.amethyst.live"
+LABEL author="Samuel J Voeller" maintainer="samuel.voeller@amethyst.live"
 
-LABEL       org.opencontainers.image.source="https://github.com/amethyst-studio/pterodactyl-nest.git"
-LABEL       org.opencontainers.image.licenses=MIT
+LABEL org.opencontainers.image.source="https://github.com/amethyst-studio/pterodactyl-nest.git"
+LABEL org.opencontainers.image.description="The installation container used to first initialize a server. This image is not intended nor capable of hosting applications."
+LABEL org.opencontainers.image.licenses=MIT
 
-ENV         DEBIAN_FRONTEND=noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
-RUN         dpkg --add-architecture i386 \
-              && apt update \
-              && apt upgrade -y \
-              && apt -y --no-install-recommends install ca-certificates curl lib32gcc-s1 libsdl2-2.0-0:i386 git
+RUN \
+  dpkg --add-architecture i386 && \
+  apt-get update && apt-get upgrade -y && \
+  apt install --no-install-recommends -y ca-certificates curl lib32gcc-s1 libsdl2-2.0-0:i386 git
+RUN apt-get autoremove -y && apt-get clean autoclean && rm -rf /var/lib/apt/lists/*

@@ -1,15 +1,23 @@
 #!/bin/bash
-cd /home/container
+cd /home/container || exit
 
-# Make internal Docker IP address available to processes.
-export INTERNAL_IP=`ip route get 1 | awk '{print $NF;exit}'`
+# trunk-ignore(shellcheck/SC2312)
+INTERNAL_IP=$(ip route get 1 | awk '{print $NF;exit}')
+INTERNAL_PORT="{{server.build.default.port}}"
+NODE_VERSION=$(node --version)
+export INTERNAL_IP
 
-# Print Node.js Version
-node -v
+# Detail localized information.
+echo
+echo '=== Local Configuration ==='
+echo "Node.js Version: ${NODE_VERSION}"
+echo "Mapped IP: ${INTERNAL_IP}"
+echo "Mapped Port: ${INTERNAL_PORT}"
+echo '=-=-=-=-=-=-=-=-=-=-=-=-=-='
+echo
+echo
 
-# Replace Startup Variables
-MODIFIED_STARTUP=$(echo -e ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')
-echo ":/home/container$ ${MODIFIED_STARTUP}"
-
-# Run the Server
-eval ${MODIFIED_STARTUP}
+# Initialize the application.
+MODIFIED_STARTUP=$(echo -e "${STARTUP}" | sed -e 's/{{/${/g' -e 's/}}/}/g')
+echo "$ ${MODIFIED_STARTUP}"
+eval "${MODIFIED_STARTUP}"

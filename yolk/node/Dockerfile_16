@@ -1,15 +1,20 @@
-FROM        node:16-buster-slim
+FROM node:16-buster-slim
 
-LABEL       author="Samuel Voeller" maintainer="samuel.voeller@mxsrv.amethyst.live"
+LABEL author="Samuel J Voeller" maintainer="samuel.voeller@amethyst.live"
 
-RUN         apt update \
-            && apt -y install build-essential ca-certificates dnsutils ffmpeg g++ gcc git iproute2 libsqlite3-dev make python3 python3-dev sqlite3 tzdata zip \
-            && npm install -g node-gyp forever \
-            && useradd -m -d /home/container container
+LABEL org.opencontainers.image.source="https://github.com/amethyst-studio/pterodactyl-nest.git"
+LABEL org.opencontainers.image.description="Runnable Node.js container for Pterodactyl. This image is intended to be used for application hosting."
+LABEL org.opencontainers.image.licenses=MIT
 
-USER        container
-ENV         USER=container HOME=/home/container
-WORKDIR     /home/container
+RUN \
+  dpkg --add-architecture i386 && \
+  apt-get update && apt-get upgrade -y && \
+  apt install --no-install-recommends -y build-essential ca-certificates dnsutils ffmpeg g++ gcc git iproute2 libsqlite3-dev make python3 python3-dev sqlite3 tzdata zip
+RUN apt-get autoremove -y && apt-get clean autoclean && rm -rf /var/lib/apt/lists/*
 
-COPY        ./entrypoint.sh /entrypoint.sh
-CMD         ["/bin/bash", "/entrypoint.sh"]
+USER container
+ENV USER=container HOME=/home/container
+WORKDIR /home/container
+
+COPY ./entrypoint.sh /entrypoint.sh
+CMD ["/bin/bash", "/entrypoint.sh"]

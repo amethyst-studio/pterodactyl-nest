@@ -1,4 +1,4 @@
-FROM node:12-buster-slim
+FROM node:17-buster-slim
 
 LABEL author="Samuel J Voeller" maintainer="samuel.voeller@amethyst.live"
 
