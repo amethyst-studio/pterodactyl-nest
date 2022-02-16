@@ -73,6 +73,7 @@ fi
 echo
 echo '$ git config --global user.email report@amethyst.live' && git config --global user.email 'report@amethyst.live'
 echo '$ git config --global user.name Amethyst Pterodactyl.io' && git config --global user.name 'Amethyst Pterodactyl.io'
+echo "$ git config --global pull.rebase true" && git config --global pull.rebase true
 
 # Determine the installation method.
 if [[ ${ORIGIN} != '' ]]; then

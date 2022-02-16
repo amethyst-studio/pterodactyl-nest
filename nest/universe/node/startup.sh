@@ -11,15 +11,23 @@ if [[ -d .git ]] && [[ ${UPDATE} == '1' ]]; then
 fi
 
 # Build the extra binaries used to install certain packages.
-echo "$ npm install --no-save node-gyp" && npm install --no-save node-gyp > /dev/null 2>&1
-echo "$ npm install --no-save @mapbox/node-pre-gyp" && npm install --no-save @mapbox/node-pre-gyp > /dev/null 2>&1
+if [[ ${INSTALL_CORE} == '1' ]]; then
+  echo "Installing core packages used for building other special packages."
+  echo "$ npm install --no-save node-gyp" && npm install --no-save node-gyp > /dev/null 2>&1
+  echo "$ npm install --no-save @mapbox/node-pre-gyp" && npm install --no-save @mapbox/node-pre-gyp > /dev/null 2>&1
+fi
+
+# Install additional packages used by the main npm install process.
+if [[ ${INSTALL_ADDITIONAL} != ""   ]]; then
+  echo "$ npm install --no-save ${INSTALL_ADDITIONAL}" && npm install --no-save "${INSTALL_ADDITIONAL}" > /dev/null 2>&1
+fi
 
 # Install the latest application software based on the lock file if it is tracked.
 echo "$ npm install --only=production" && npm install --only=production > /dev/null 2>&1
 
 # Launch the application via the specified mode.
-if [[ ${RESTART} == 'true' ]] || [[ ${RESTART} == '1' ]]; then
-  forever --minUptime=500 --spinSleepTime=1000 -c 'node --max-old-space-size={{SERVER_MEMORY}} {{SCRIPT}}'
+if [[ ${AUTOMATIC_RESTART} == '1' ]]; then
+  npx --yes --package=forever -c forever --minUptime=500 --spinSleepTime=1000 -c 'node --max-old-space-size={{SERVER_MEMORY}} {{SCRIPT}}'
 else
   node --max-old-space-size='{{SERVER_MEMORY}}' '{{SCRIPT}}'
 fi

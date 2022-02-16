@@ -1,8 +1,6 @@
 #!/bin/bash
 cd /home/container || exit
 
-# trunk-ignore(shellcheck/SC2312)
-INTERNAL_IP=$(ip route get 1 | awk '{print $NF;exit}')
 INTERNAL_PORT="{{server.build.default.port}}"
 NODE_VERSION=$(node --version)
 export INTERNAL_IP
@@ -11,7 +9,6 @@ export INTERNAL_IP
 echo
 echo '=== Local Configuration ==='
 echo "Node.js Version: ${NODE_VERSION}"
-echo "Mapped IP: ${INTERNAL_IP}"
 echo "Mapped Port: ${INTERNAL_PORT}"
 echo '=-=-=-=-=-=-=-=-=-=-=-=-=-='
 echo
