@@ -45,7 +45,7 @@ const _variable = [
     default_value: '',
     user_viewable: true,
     user_editable: true,
-    rules: 'required|string|max:4096'
+    rules: 'string|max:4096'
   },
   {
     name: 'Update via Git',
