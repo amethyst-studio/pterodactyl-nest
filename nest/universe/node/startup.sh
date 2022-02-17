@@ -19,7 +19,7 @@ if [[ ${INSTALL_CORE} == '1' ]]; then
 fi
 
 # Install additional packages used by the main npm install process.
-if [[ ${INSTALL_ADDITIONAL} != ""   ]]; then
+if [[ ${INSTALL_ADDITIONAL} != "" ]]; then
   echo "Installing additional packages as requested by the environment."
   echo "$ npm install --no-save ${INSTALL_ADDITIONAL}" && npm install --no-save "${INSTALL_ADDITIONAL}" > /dev/null 2>&1
 fi
