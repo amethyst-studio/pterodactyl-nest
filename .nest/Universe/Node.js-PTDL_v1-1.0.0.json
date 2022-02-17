@@ -13,7 +13,7 @@
     "ghcr.io/amethyst-studio/yolks:node_16",
     "ghcr.io/amethyst-studio/yolks:node_17"
   ],
-  "startup": "if [[ -d .git ]]&&[[ ${UPDATE} == '1' ]];then echo \"$ git config --global pull.rebase true\"&&git config --global pull.rebase true;echo \"$ git fetch --all\"&&git fetch --all;echo \"$ git reset --hard\"&&git reset --hard;echo \"$ git pull\"&&git pull;echo \"$ git ls-files --error-unmatch package-lock.json || rm -f ./package-lock.json\";git ls-files --error-unmatch package-lock.json||rm -f package-lock.json;fi;if [[ ${INSTALL_CORE} == '1' ]];then echo \"Installing core packages used for building other special packages.\";echo \"$ npm install --no-save node-gyp\"&&npm install --no-save node-gyp>/dev/null 2>&1;echo \"$ npm install --no-save @mapbox/node-pre-gyp\"&&npm install --no-save @mapbox/node-pre-gyp>/dev/null 2>&1;fi;if [[ ${INSTALL_ADDITIONAL} != \"\" ]];then echo \"$ npm install --no-save ${INSTALL_ADDITIONAL}\"&&npm install --no-save \"${INSTALL_ADDITIONAL}\">/dev/null 2>&1;fi;echo \"$ npm install --only=production\"&&npm install --only=production>/dev/null 2>&1;if [[ ${AUTOMATIC_RESTART} == '1' ]];then npx --yes --package=forever -c forever --minUptime=500 --spinSleepTime=1000 -c 'node --max-old-space-size={{SERVER_MEMORY}} {{SCRIPT}}';else node --max-old-space-size='{{SERVER_MEMORY}}' '{{SCRIPT}}';fi",
+  "startup": "if [[ -d .git ]]&&[[ ${UPDATE} == '1' ]];then echo \"Updating the remote sources from the remote Git repository.\";echo \"$ git config --global pull.rebase true\"&&git config --global pull.rebase true;echo \"$ git fetch --all\"&&git fetch --all;echo \"$ git reset --hard\"&&git reset --hard;echo \"$ git pull\"&&git pull;echo \"$ git ls-files --error-unmatch package-lock.json || rm -f ./package-lock.json\";git ls-files --error-unmatch package-lock.json||rm -f package-lock.json;fi;if [[ ${INSTALL_CORE} == '1' ]];then echo \"Installing core packages as requested by the environment.\";echo \"$ npm install --no-save node-gyp\"&&npm install --no-save node-gyp>/dev/null 2>&1;echo \"$ npm install --no-save @mapbox/node-pre-gyp\"&&npm install --no-save @mapbox/node-pre-gyp>/dev/null 2>&1;fi;if [[ ${INSTALL_ADDITIONAL} != \"\" ]];then echo \"Installing additional packages as requested by the environment.\";echo \"$ npm install --no-save ${INSTALL_ADDITIONAL}\"&&npm install --no-save \"${INSTALL_ADDITIONAL}\">/dev/null 2>&1;fi;echo \"Installing the production dependencies from the 'package.json' provided by the user.\";echo \"$ npm install --only=production\"&&npm install --only=production>/dev/null 2>&1;if [[ ${AUTOMATIC_RESTART} == '1' ]];then echo \"Launching the application in fast-restart mode.\";npx --yes --package=forever -c forever --minUptime=500 --spinSleepTime=1000 -c 'node --max-old-space-size={{SERVER_MEMORY}} {{SCRIPT}}';else echo \"Launching the application in full-restart mode.\";node --max-old-space-size='{{SERVER_MEMORY}}' '{{SCRIPT}}';fi",
   "config": {
     "files": "{}",
     "startup": "{\"done\":\"[Pterodactyl] We are ready.\"}",
@@ -102,6 +102,6 @@
     }
   ],
   "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
-  "exported_at": "2022-02-16T21:44:49.466Z",
+  "exported_at": "2022-02-17T15:18:21.568Z",
   "author": "postmaster@mxsrv.amethyst.live"
 }
