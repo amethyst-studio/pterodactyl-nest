@@ -45,7 +45,7 @@ const _variable = [
     default_value: '',
     user_viewable: true,
     user_editable: true,
-    rules: 'string|max:4096'
+    rules: 'nullable|string|max:4096'
   },
   {
     name: 'Update via Git',
@@ -63,7 +63,7 @@ const _variable = [
     default_value: '',
     user_viewable: true,
     user_editable: true,
-    rules: 'string|max:512'
+    rules: 'nullable|string|max:512'
   },
   {
     name: 'Git Username',
@@ -72,7 +72,7 @@ const _variable = [
     default_value: '',
     user_viewable: true,
     user_editable: true,
-    rules: 'string|max:64'
+    rules: 'nullable|string|max:64'
   },
   {
     name: 'Git Token',
@@ -81,7 +81,7 @@ const _variable = [
     default_value: '',
     user_viewable: true,
     user_editable: true,
-    rules: 'string|max:256'
+    rules: 'nullable|string|max:256'
   }
 ]
 
