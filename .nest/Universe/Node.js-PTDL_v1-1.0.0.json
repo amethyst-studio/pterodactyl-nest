@@ -62,7 +62,7 @@
       "default_value": "",
       "user_viewable": true,
       "user_editable": true,
-      "rules": "required|string|max:4096"
+      "rules": "string|max:4096"
     },
     {
       "name": "Update via Git",
@@ -102,6 +102,6 @@
     }
   ],
   "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
-  "exported_at": "2022-02-17T15:21:20.497Z",
+  "exported_at": "2022-02-17T15:21:53.466Z",
   "author": "postmaster@mxsrv.amethyst.live"
 }
